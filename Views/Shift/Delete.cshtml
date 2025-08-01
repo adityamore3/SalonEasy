@@ -1,0 +1,29 @@
+﻿@model SalonEasy.Models.Shift
+
+<div class="min-h-screen py-10 px-4">
+    <div class="max-w-xl mx-auto shadow-xl border border-red-200 rounded-2xl p-8 bg-white">
+        <div class="flex items-center mb-6">
+            <i class="bi bi-exclamation-triangle-fill text-red-500 text-2xl me-2"></i>
+            <h2 class="text-xl font-semibold text-red-500">Confirm Deletion</h2>
+        </div>
+
+        <div class="bg-red-100 text-red-800 px-4 py-3 rounded-lg border border-red-300">
+            Are you sure you want to delete this shift for
+            <strong class="font-semibold">Employee ID: @Model.EmployeeId</strong>?
+        </div>
+
+        <form method="post" class="mt-6">
+            <input type="hidden" asp-for="Id" />
+            <div class="flex justify-between pt-4">
+                <a href="/Shift" class="flex items-center gap-2 border border-gray-400 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+                    <i class="bi bi-arrow-left-circle"></i>
+                    <span>Cancel</span>
+                </a>
+                <button type="submit" class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white font-semibold px-5 py-2 rounded-lg transition">
+                    <i class="bi bi-trash-fill"></i>
+                    <span>Delete Shift</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

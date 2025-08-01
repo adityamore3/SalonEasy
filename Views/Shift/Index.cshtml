@@ -1,0 +1,55 @@
+﻿@model List<SalonEasy.Models.Shift>
+
+<div class="min-h-screen px-4 py-10">
+    <div class="max-w-5xl mx-auto">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-semibold text-gray-800 flex items-center gap-2">
+                <i class="bi bi-calendar-check text-blue-500 text-2xl"></i>
+                Shift Schedule
+            </h2>
+            <a href="/Shift/Assign" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-sm transition">
+                <i class="bi bi-plus-circle"></i> Assign New Shift
+            </a>
+        </div>
+
+        <div class="overflow-x-auto bg-white shadow-lg rounded-xl border border-gray-200">
+            <table class="min-w-full table-auto text-sm text-gray-800">
+                <thead class="bg-gray-100 text-gray-700 uppercase text-xs">
+                    <tr>
+                        <th class="px-6 py-4 text-left">Employee ID</th>
+                        <th class="px-6 py-4 text-left">Start Time</th>
+                        <th class="px-6 py-4 text-left">End Time</th>
+                        <th class="px-6 py-4 text-left">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count == 0)
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center px-6 py-6 text-gray-500">No shifts assigned.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var s in Model)
+                        {
+                            <tr class="border-t">
+                                <td class="px-6 py-4">@s.EmployeeId</td>
+                                <td class="px-6 py-4">@s.StartTime.ToString("g")</td>
+                                <td class="px-6 py-4">@s.EndTime.ToString("g")</td>
+                                <td class="px-6 py-4 flex gap-2">
+                                    <a href="/Shift/Edit/@s.Id" class="inline-flex items-center gap-1 text-blue-500 hover:text-blue-700">
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </a>
+                                    <a href="/Shift/Delete/@s.Id" class="inline-flex items-center gap-1 text-red-500 hover:text-red-700">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

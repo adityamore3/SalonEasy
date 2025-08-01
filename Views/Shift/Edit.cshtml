@@ -1,0 +1,48 @@
+﻿@model SalonEasy.Models.Shift
+
+<div class="min-h-screen py-10 px-4 bg-white">
+    <div class="max-w-xl mx-auto shadow-xl rounded-2xl p-8 border border-gray-200 bg-gray-50">
+        <div class="flex items-center mb-6">
+            <i class="bi bi-pencil-square text-blue-500 text-2xl me-2"></i>
+            <h2 class="text-xl font-semibold text-blue-500">Edit Shift</h2>
+        </div>
+
+        <form method="post" class="space-y-5">
+            <input type="hidden" asp-for="Id" />
+
+            <div>
+                <label class="block text-sm font-medium mb-1 text-gray-700">👤 Employee ID</label>
+                <input asp-for="EmployeeId"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <span asp-validation-for="EmployeeId" class="text-red-500 text-sm"></span>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1 text-gray-700">📅 Start Time</label>
+                <input asp-for="StartTime" type="datetime-local"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <span asp-validation-for="StartTime" class="text-red-500 text-sm"></span>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1 text-gray-700">🕒 End Time</label>
+                <input asp-for="EndTime" type="datetime-local"
+                       class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <span asp-validation-for="EndTime" class="text-red-500 text-sm"></span>
+            </div>
+
+            <div class="flex justify-between pt-4">
+                <a href="/Shift"
+                   class="flex items-center gap-2 border border-gray-400 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+                    <i class="bi bi-arrow-left-circle"></i>
+                    <span>Cancel</span>
+                </a>
+                <button type="submit"
+                        class="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold px-5 py-2 rounded-lg transition">
+                    <i class="bi bi-save"></i>
+                    <span>Update Shift</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

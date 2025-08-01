@@ -1,0 +1,177 @@
+﻿@* Views/Shared/_Layout.cshtml *@
+@using Microsoft.AspNetCore.Http
+@{
+    var isAdminLoggedIn = Context.Session.GetString("Admin") != null;
+}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SalonEasy</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                primary: '#4f46e5',
+                accent:  '#a78bfa',
+                surface: '#f9fafb',
+                muted:   '#6b7280',
+                text:    '#374151',
+                bg:      '#ffffff'
+              }
+            }
+          }
+        }
+    </script>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body class="bg-surface text-text font-sans flex flex-col min-h-screen">
+
+    <!-- HEADER (logo + nav) -->
+    <header class="bg-gradient-to-r from-indigo-600 to-purple-600 shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+
+            <!-- Logo -->
+            <a href="/" class="flex items-center space-x-2">
+                <i class="bi bi-scissors text-3xl text-white"></i>
+                <span class="text-3xl font-extrabold text-white tracking-tight">SalonEasy</span>
+            </a>
+
+            @if (!isAdminLoggedIn)
+            {
+                <!-- Pre-login nav: only the login button -->
+                <div class="flex items-center space-x-4">
+                    
+                    <a href="/Admin/Login"
+                       class="inline-block bg-white text-indigo-600 font-semibold px-5 py-2 rounded-full shadow hover:bg-gray-100 transition">
+                        Login
+                    </a>
+                </div>
+            }
+            else
+            {
+                <!-- Post-login nav: your full set -->
+                <nav class="hidden md:flex space-x-6 font-medium text-white">
+                    <a href="/Employee" class="hover:underline">Employee</a>
+                    <a href="/Shift" class="hover:underline">Shift</a>
+                    <a href="/Appointment" class="hover:underline">Appointment</a>
+                    <a href="/Admin/Dashboard" class="hover:underline">Dashboard</a>
+                    <a href="/Admin/Logout" class="hover:underline text-red-300 hover:text-red-100">Logout</a>
+                </nav>
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-white">
+                    <i class="bi bi-list text-2xl"></i>
+                </button>
+            }
+
+        </div>
+    </header>
+
+    <!-- MOBILE MENU DRAWER -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+        <!-- backdrop -->
+        <div class="absolute inset-0 bg-black bg-opacity-40" onclick="toggleMobileMenu()"></div>
+        <!-- drawer -->
+        <aside class="relative bg-white w-64 h-full p-6 shadow-lg">
+            <button id="mobile-menu-close" class="mb-8 p-2 text-gray-700">
+                <i class="bi bi-x-lg text-xl"></i>
+            </button>
+            <nav class="flex flex-col space-y-4 text-lg text-gray-800 font-medium">
+                @if (!isAdminLoggedIn)
+                {
+                    <a href="/Admin/Login" onclick="toggleMobileMenu()">Admin Login</a>
+                }
+                else
+                {
+                    <a href="/Employee" onclick="toggleMobileMenu()">Employee</a>
+                    <a href="/Shift" onclick="toggleMobileMenu()">Shift</a>
+                    <a href="/Appointment" onclick="toggleMobileMenu()">Appointment</a>
+                    <a href="/Admin/Dashboard" onclick="toggleMobileMenu()">Dashboard</a>
+                    <a href="/Admin/Logout" class="text-red-500" onclick="toggleMobileMenu()">Logout</a>
+                }
+            </nav>
+        </aside>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 pt-6 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            @RenderBody()
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+<footer class="bg-white border-t-4 border-indigo-600 mt-20 text-slate-700">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Quick Links -->
+        <div>
+            <h3 class="text-xl font-semibold mb-4 flex items-center">
+                <i class="bi bi-link-45deg mr-2 text-indigo-600"></i> Quick Links
+            </h3>
+            <ul class="space-y-2">
+                <li><a href="/Employee" class="hover:text-purple-600 transition">Employee</a></li>
+                <li><a href="/Shift" class="hover:text-purple-600 transition">Shift</a></li>
+                <li><a href="/Appointment" class="hover:text-purple-600 transition">Appointment</a></li>
+                <li><a href="/Admin/Dashboard" class="hover:text-purple-600 transition">Dashboard</a></li>
+
+            </ul>
+        </div>
+
+        <!-- Features -->
+        <div>
+            <h3 class="text-xl font-semibold mb-4 flex items-center">
+                <i class="bi bi-stars mr-2 text-indigo-600"></i> Features
+            </h3>
+            <ul class="space-y-2 text-slate-600">
+                <li><i class="bi bi-person-check-fill text-purple-500 mr-2"></i>Staff Management</li>
+                <li><i class="bi bi-calendar2-range-fill text-purple-500 mr-2"></i>Shift Scheduling</li>
+                <li><i class="bi bi-calendar-check-fill text-purple-500 mr-2"></i>Appointment Booking</li>
+                <li><i class="bi bi-clipboard-check-fill text-purple-500 mr-2"></i>Task Tracking</li>
+            </ul>
+        </div>
+
+        <!-- Support & Social -->
+        <div>
+            <h3 class="text-xl font-semibold mb-4 flex items-center">
+                <i class="bi bi-life-preserver mr-2 text-indigo-600"></i> Support
+            </h3>
+            <ul class="space-y-2">
+                <li><a href="#" class="hover:text-purple-600 transition">Help Center</a></li>
+                <li><a href="#" class="hover:text-purple-600 transition">Privacy Policy</a></li>
+                <li><a href="#" class="hover:text-purple-600 transition">Terms of Service</a></li>
+            </ul>
+            <div class="mt-6">
+                <p class="font-semibold mb-2">Follow us</p>
+                <div class="flex space-x-4 text-lg">
+                    <a href="#" class="text-gray-500 hover:text-indigo-600 transition"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-pink-500 transition"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-sky-500 transition"><i class="bi bi-twitter-x"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-gray-100 py-4 text-center text-sm text-gray-500">
+        &copy; @DateTime.Now.Year <span class="font-semibold text-slate-700">SalonEasy</span> — Design by <span class="text-indigo-600 font-medium">Aditya</span>. All rights reserved.
+    </div>
+</footer>
+
+
+
+    <!-- Scripts -->
+    <script>
+        function toggleMobileMenu() {
+          document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', toggleMobileMenu);
+        document.getElementById('mobile-menu-close')?.addEventListener('click', toggleMobileMenu);
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿@model List<SalonEasy.Models.ProductUsed>
+@{
+    ViewData["Title"] = "Products Used";
+}
+
+<h2 class="text-xl font-bold mb-4">Products Used in Appointments</h2>
+
+<form asp-action="AddProductUsed" method="post" class="grid grid-cols-4 gap-2 mb-4">
+    <input name="AppointmentId" placeholder="Appointment ID" class="border p-2" />
+    <input name="ProductName" placeholder="Product Name" class="border p-2" />
+    <input name="QuantityUsed" type="number" placeholder="Quantity" class="border p-2" />
+    <button class="bg-green-500 text-white px-4 py-2 rounded">Add</button>
+</form>
+
+<table class="min-w-full bg-white shadow rounded text-sm">
+    <thead>
+        <tr>
+            <th class="px-4 py-2">Appointment</th>
+            <th class="px-4 py-2">Product</th>
+            <th class="px-4 py-2">Quantity</th>
+            <th class="px-4 py-2">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+        {
+            <!-- Display Row -->
+            <tr>
+                <td class="border-t px-4 py-2">@x.AppointmentId</td>
+                <td class="border-t px-4 py-2">@x.ProductName</td>
+                <td class="border-t px-4 py-2">@x.QuantityUsed</td>
+                <td class="border-t px-4 py-2 space-x-2">
+                    <button type="button"
+                            onclick="openEditUsed(@x.Id)"
+                            class="text-blue-600 hover:underline">
+                        Edit
+                    </button>
+                    <form asp-action="DeleteProductUsed" method="post" class="inline">
+                        <input type="hidden" name="id" value="@x.Id" />
+                        <button type="submit" class="text-red-600 hover:underline">
+                            Delete
+                        </button>
+                    </form>
+                </td>
+            </tr>
+
+            <!-- Hidden Edit Row -->
+            <tr id="edit-used-@x.Id" class="hidden bg-gray-50">
+                <td colspan="4" class="p-4">
+                    <form asp-action="UpdateProductUsed" method="post" class="grid grid-cols-4 gap-2">
+                        <input type="hidden" name="Id" value="@x.Id" />
+
+                        <input name="AppointmentId"
+                               value="@x.AppointmentId"
+                               class="border p-2"
+                               placeholder="Appointment ID" />
+
+                        <input name="ProductName"
+                               value="@x.ProductName"
+                               class="border p-2"
+                               placeholder="Product Name" />
+
+                        <input name="QuantityUsed"
+                               type="number"
+                               value="@x.QuantityUsed"
+                               class="border p-2"
+                               placeholder="Quantity" />
+
+                        <div class="flex items-center space-x-2">
+                            <button type="submit"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded">
+                                Save
+                            </button>
+                            <button type="button"
+                                    onclick="closeEditUsed(@x.Id)"
+                                    class="bg-gray-300 text-gray-700 px-4 py-2 rounded">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function openEditUsed(id) {
+        document.getElementById(`edit-used-${id}`).classList.remove('hidden');
+    }
+    function closeEditUsed(id) {
+        document.getElementById(`edit-used-${id}`).classList.add('hidden');
+    }
+</script>

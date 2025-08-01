@@ -1,0 +1,94 @@
+﻿@model List<SalonEasy.Models.LeaveRequest>
+@{
+    ViewData["Title"] = "Staff Leave Requests";
+}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl sm:text-3xl font-bold mb-6">Staff Leave Requests</h2>
+
+    <!-- Add Leave Form -->
+    <form asp-action="AddLeave" method="post" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
+        <input name="Employee" placeholder="Employee" class="border p-2 rounded w-full" />
+        <input name="From" type="date" class="border p-2 rounded w-full" />
+        <input name="To" type="date" class="border p-2 rounded w-full" />
+        <input name="Reason" placeholder="Reason" class="border p-2 rounded w-full" />
+        <select name="Status" class="border p-2 rounded w-full">
+            <option>Pending</option>
+            <option>Approved</option>
+            <option>Rejected</option>
+        </select>
+        <button class="bg-green-500 text-white px-4 py-2 rounded w-full hover:bg-green-600 transition">
+            Add Leave
+        </button>
+    </form>
+
+    <!-- Table -->
+    <div class="overflow-x-auto bg-white shadow rounded">
+        <table class="min-w-full text-sm divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-4 py-2 text-left">Employee</th>
+                    <th class="px-4 py-2 text-left">From</th>
+                    <th class="px-4 py-2 text-left">To</th>
+                    <th class="px-4 py-2 text-left">Reason</th>
+                    <th class="px-4 py-2 text-left">Status</th>
+                    <th class="px-4 py-2 text-left">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                @foreach (var x in Model)
+                {
+                    <tr>
+                        <td class="px-4 py-3">@x.Employee</td>
+                        <td class="px-4 py-3">@x.From.ToString("yyyy-MM-dd")</td>
+                        <td class="px-4 py-3">@x.To.ToString("yyyy-MM-dd")</td>
+                        <td class="px-4 py-3">@x.Reason</td>
+                        <td class="px-4 py-3">@x.Status</td>
+                        <td class="px-4 py-3 space-x-2 flex flex-wrap">
+                            <button onclick="openEditForm(@x.Id)"
+                                    class="text-blue-600 hover:underline" type="button">
+                                Edit
+                            </button>
+                            <form asp-action="DeleteLeave" method="post" class="inline">
+                                <input type="hidden" name="id" value="@x.Id" />
+                                <button class="text-red-600 hover:underline" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    <!-- Hidden Edit Row -->
+                    <tr id="edit-row-@x.Id" class="hidden bg-gray-50">
+                        <td colspan="6" class="px-4 py-4">
+                            <form asp-action="UpdateLeave" method="post" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+                                <input type="hidden" name="Id" value="@x.Id" />
+                                <input name="Employee" value="@x.Employee" class="border p-2 rounded w-full" />
+                                <input name="From" type="date" value="@x.From.ToString("yyyy-MM-dd")" class="border p-2 rounded w-full" />
+                                <input name="To" type="date" value="@x.To.ToString("yyyy-MM-dd")" class="border p-2 rounded w-full" />
+                                <input name="Reason" value="@x.Reason" class="border p-2 rounded w-full" />
+                                <select name="Status" class="border p-2 rounded w-full">
+                                    <option value="Pending" selected="@(x.Status == "Pending")">Pending</option>
+                                    <option value="Approved" selected="@(x.Status == "Approved")">Approved</option>
+                                    <option value="Rejected" selected="@(x.Status == "Rejected")">Rejected</option>
+                                </select>
+                                <button class="bg-blue-500 text-white px-4 py-2 rounded w-full hover:bg-blue-600 transition">Save</button>
+                                <button onclick="closeEditForm(@x.Id)" type="button"
+                                        class="bg-gray-300 text-gray-700 px-4 py-2 rounded w-full hover:bg-gray-400 transition">
+                                    Cancel
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function openEditForm(id) {
+      document.getElementById(`edit-row-${id}`).classList.remove('hidden');
+    }
+    function closeEditForm(id) {
+      document.getElementById(`edit-row-${id}`).classList.add('hidden');
+    }
+</script>

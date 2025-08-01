@@ -1,0 +1,82 @@
+﻿@model SalonEasy.Models.Appointment
+@{
+    ViewData["Title"] = "Edit Appointment";
+}
+
+<div class="min-h-screen px-4 py-10">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl font-semibold text-black mb-6 flex items-center gap-2">
+      <i class="bi bi-pencil-square text-3xl"></i> Edit Appointment
+    </h2>
+
+    <form asp-action="Edit" method="post" class="bg-white p-8 rounded-xl shadow-lg space-y-6">
+      <input type="hidden" asp-for="Id" />
+      <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label asp-for="EmployeeId" class="block text-sm font-medium text-muted">Employee ID</label>
+          <input asp-for="EmployeeId" type="number"
+                 class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm" />
+          <span asp-validation-for="EmployeeId" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+          <label asp-for="ClientName" class="block text-sm font-medium text-muted">Client Name</label>
+          <input asp-for="ClientName"
+                 class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm" />
+          <span asp-validation-for="ClientName" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+          <label asp-for="Date" class="block text-sm font-medium text-muted">Date</label>
+          <input asp-for="Date" type="date"
+                 class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm" />
+          <span asp-validation-for="Date" class="text-red-600 text-sm"></span>
+        </div>
+
+        <div>
+          <label asp-for="Time" class="block text-sm font-medium text-muted">Time</label>
+          <input asp-for="Time" placeholder="hh:mm AM/PM"
+                 class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm" />
+          <span asp-validation-for="Time" class="text-red-600 text-sm"></span>
+        </div>
+      </div>
+
+      <div>
+        <label asp-for="ServiceType" class="block text-sm font-medium text-muted">Service Type</label>
+        <input asp-for="ServiceType"
+               class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm" />
+        <span asp-validation-for="ServiceType" class="text-red-600 text-sm"></span>
+      </div>
+
+      <div>
+        <label asp-for="Notes" class="block text-sm font-medium text-muted">Notes</label>
+        <textarea asp-for="Notes" rows="4"
+                  class="mt-1 block w-full rounded-lg border border-gray-300 focus:border-green-600 focus:ring-green-600 shadow-sm"></textarea>
+        <span asp-validation-for="Notes" class="text-red-600 text-sm"></span>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <input asp-for="IsConfirmed" type="checkbox"
+               class="h-5 w-5 text-green-600 focus:ring-green-600 border-gray-300 rounded" />
+        <label asp-for="IsConfirmed" class="text-sm font-medium text-muted">Confirm Appointment</label>
+      </div>
+
+      <div class="pt-6 border-t border-gray-200 flex justify-end gap-4">
+        <button type="submit"
+                class="px-6 py-2 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition">
+          Update
+        </button>
+        <a asp-action="Index"
+           class="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+}

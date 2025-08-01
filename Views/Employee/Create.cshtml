@@ -1,0 +1,75 @@
+﻿@model SalonEasy.Models.Employee
+@{
+    ViewData["Title"] = "Add New Employee";
+}
+
+<div class="max-w-4xl mx-auto mt-12 p-8 bg-white shadow-xl rounded-2xl">
+    <div class="flex items-center justify-between mb-8 border-b pb-4">
+        <h2 class="text-3xl font-bold text-gray-800">Add New Employee</h2>
+        <a href="/Employee/Index" class="text-cyan-600 hover:text-cyan-800 flex items-center gap-1">
+            <i class="bi bi-arrow-left-circle text-xl"></i> Back
+        </a>
+    </div>
+
+    <form asp-action="Create" method="post" novalidate class="space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <label asp-for="Name" class="block text-sm font-semibold text-gray-700 mb-1">Full Name</label>
+                <input asp-for="Name" placeholder="Priya Sharma" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" />
+                <span asp-validation-for="Name" class="text-red-500 text-sm"></span>
+            </div>
+            <div>
+                <label asp-for="Position" class="block text-sm font-semibold text-gray-700 mb-1">Position</label>
+                <input asp-for="Position" placeholder="Stylist / Barber" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" />
+                <span asp-validation-for="Position" class="text-red-500 text-sm"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <label asp-for="Contact" class="block text-sm font-semibold text-gray-700 mb-1">Contact Number</label>
+                <input asp-for="Contact" placeholder="9876543210" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" />
+                <span asp-validation-for="Contact" class="text-red-500 text-sm"></span>
+            </div>
+            <div>
+                <label asp-for="Email" class="block text-sm font-semibold text-gray-700 mb-1">Email Address</label>
+                <input asp-for="Email" placeholder="example@mail.com" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" />
+                <span asp-validation-for="Email" class="text-red-500 text-sm"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <label asp-for="Rating" class="block text-sm font-semibold text-gray-700 mb-1">Rating (1 - 5)</label>
+                <input asp-for="Rating" type="number" step="0.1" placeholder="4.5" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" />
+                <span asp-validation-for="Rating" class="text-red-500 text-sm"></span>
+            </div>
+            <div>
+                <label asp-for="ProfilePictureUrl" class="block text-sm font-semibold text-gray-700 mb-1">Profile Picture URL</label>
+                <input asp-for="ProfilePictureUrl" placeholder="https://example.com/image.jpg" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500" />
+                <span asp-validation-for="ProfilePictureUrl" class="text-red-500 text-sm"></span>
+            </div>
+        </div>
+
+        <div>
+            <label asp-for="Bio" class="block text-sm font-semibold text-gray-700 mb-1">Short Bio</label>
+            <textarea asp-for="Bio" rows="4" placeholder="Brief background, specialization or experience..." class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500"></textarea>
+            <span asp-validation-for="Bio" class="text-red-500 text-sm"></span>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <input asp-for="IsActive" type="checkbox" class="h-4 w-4 text-cyan-600 border-gray-300 rounded focus:ring-cyan-500" />
+            <label asp-for="IsActive" class="text-sm text-gray-700">Currently Active</label>
+        </div>
+
+        <div>
+            <button type="submit" class="w-full flex items-center justify-center px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold text-lg rounded-md shadow">
+                <i class="bi bi-save mr-2"></i> Save Employee
+            </button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

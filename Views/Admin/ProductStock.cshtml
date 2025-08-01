@@ -1,0 +1,118 @@
+﻿@model List<SalonEasy.Models.ProductStock>
+@using System.Text.Json
+
+@{
+    ViewData["Title"] = "Product Stock";
+    var productNamesJson = JsonSerializer.Serialize(Model.Select(x => x.ProductName));
+    var quantitiesJson = JsonSerializer.Serialize(Model.Select(x => x.QuantityAvailable));
+}
+
+<h2 class="text-xl font-bold mb-4">Product Inventory</h2>
+
+<div class="flex flex-col lg:flex-row lg:space-x-8">
+    <!-- Left Column: Table -->
+    <div class="lg:w-1/2">
+        <form asp-action="AddProductStock" method="post" class="grid grid-cols-3 gap-2 mb-4">
+            <input name="ProductName" placeholder="Product Name" class="border p-2" />
+            <input name="QuantityAvailable" type="number" placeholder="Qty Available" class="border p-2" />
+            <button class="bg-green-500 text-white px-4 py-2 rounded">Add</button>
+        </form>
+
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow rounded text-sm">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Product</th>
+                        <th class="px-4 py-2">Available</th>
+                        <th class="px-4 py-2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var x in Model)
+                    {
+                        <tr>
+                            <td class="border-t px-4 py-2">@x.ProductName</td>
+                            <td class="border-t px-4 py-2">@x.QuantityAvailable</td>
+                            <td class="border-t px-4 py-2 space-x-2">
+                                <button type="button" onclick="openEditStock(@x.Id)"
+                                        class="text-blue-600 hover:underline">
+                                    Edit
+                                </button>
+                                <form asp-action="DeleteProductStock" method="post" class="inline">
+                                    <input type="hidden" name="id" value="@x.Id" />
+                                    <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr id="edit-stock-@x.Id" class="hidden bg-gray-50">
+                            <td colspan="3" class="p-4">
+                                <form asp-action="UpdateProductStock" method="post" class="grid grid-cols-3 gap-2">
+                                    <input type="hidden" name="Id" value="@x.Id" />
+                                    <input name="ProductName" value="@x.ProductName" class="border p-2" />
+                                    <input name="QuantityAvailable" type="number" value="@x.QuantityAvailable" class="border p-2" />
+                                    <div class="flex items-center space-x-2">
+                                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+                                        <button type="button" onclick="closeEditStock(@x.Id)"
+                                                class="bg-gray-300 text-gray-700 px-4 py-2 rounded">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Right Column: Chart -->
+    <div class="lg:w-1/2 flex items-center justify-center">
+        <div class="w-full">
+            <h3 class="text-lg font-semibold mb-2">Stock Overview</h3>
+            <canvas id="stockChart" class="w-full h-64"></canvas>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function openEditStock(id) {
+            document.getElementById('edit-stock-' + id).classList.remove('hidden');
+        }
+        function closeEditStock(id) {
+            document.getElementById('edit-stock-' + id).classList.add('hidden');
+        }
+
+        const productLabels     = @Html.Raw(productNamesJson);
+        const productQuantities = @Html.Raw(quantitiesJson);
+
+        const ctx = document.getElementById('stockChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: productLabels,
+                datasets: [{ data: productQuantities,
+                    backgroundColor: [
+                        '#60a5fa','#34d399','#facc15','#fb7185','#a78bfa',
+                        '#f87171','#38bdf8','#fbbf24','#4ade80','#c084fc'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'right' },
+                    tooltip: {
+                        callbacks: {
+                            label: (ctx) => `${ctx.label}: ${ctx.parsed}`
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

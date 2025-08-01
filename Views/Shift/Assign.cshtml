@@ -1,0 +1,38 @@
+﻿@model SalonEasy.Models.Shift
+
+<div class="min-h-screen py-10 px-4">
+    <div class="max-w-xl mx-auto bg-white shadow-xl border border-green-200 rounded-2xl p-8">
+        <div class="flex items-center mb-6">
+            <i class="bi bi-plus-circle-fill text-green-500 text-2xl me-2"></i>
+            <h2 class="text-xl font-semibold text-green-600">Assign New Shift</h2>
+        </div>
+
+        <form method="post" class="space-y-5">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Employee ID</label>
+                <input asp-for="EmployeeId" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                <input asp-for="StartTime" type="datetime-local" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" />
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                <input asp-for="EndTime" type="datetime-local" class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500" />
+            </div>
+
+            <div class="flex justify-between pt-6">
+                <a href="/Shift" class="flex items-center gap-2 border border-gray-400 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition">
+                    <i class="bi bi-arrow-left-circle"></i>
+                    <span>Cancel</span>
+                </a>
+                <button type="submit" class="flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold px-5 py-2 rounded-lg transition">
+                    <i class="bi bi-check-circle-fill"></i>
+                    <span>Assign Shift</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
