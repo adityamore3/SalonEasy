@@ -54,9 +54,11 @@ SalonEasy is a modern salon management system built with **.NET 8 MVC Core**. It
 ---
  📽️ **Project Demo**
 
-📽️ **Project Demo**
 
 🎥 [Click here to watch the demo video](https://github.com/adityamore3/SalonEasy/raw/master/SalonEasy.mp4)
+
+<img width="908" height="441" alt="SalonEasy" src="https://github.com/user-attachments/assets/f81ec379-3600-4027-a60f-b1bb82af2ffb" />
+
 
 
 ---
