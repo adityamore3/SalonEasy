@@ -54,10 +54,10 @@ SalonEasy is a modern salon management system built with **.NET 8 MVC Core**. It
 ---
  📽️ **Project Demo**
 
- <video width="640" height="360" controls>
-  <source src="SalonEasy.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+📽️ **Project Demo**
+
+🎥 [Click here to watch the demo video](https://github.com/adityamore3/SalonEasy/raw/master/SalonEasy.mp4)
+
 
 ---
 
