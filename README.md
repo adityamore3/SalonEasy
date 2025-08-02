@@ -1,4 +1,5 @@
-💇‍♀️ **SalonEasy**
+# 💇‍♀️ SalonEasy
+
 SalonEasy is a modern salon management system built with **.NET 8 MVC Core**. It empowers salon owners and staff to manage appointments, employee data, and shift schedules with ease — all from a single, elegant web interface.
 
 ---
